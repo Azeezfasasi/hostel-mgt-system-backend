@@ -1,8 +1,5 @@
 const Hostel = require('../models/Hostel');
 
-// @desc    Get all hostels
-// @route   GET /api/v1/hostels
-// @access  Public
 exports.getHostels = async (req, res) => {
     try {
         const hostels = await Hostel.find();
@@ -12,9 +9,6 @@ exports.getHostels = async (req, res) => {
     }
 };
 
-// @desc    Get a single hostel by ID
-// @route   GET /api/v1/hostels/:id
-// @access  Public
 exports.getHostelById = async (req, res) => {
     try {
         const hostel = await Hostel.findById(req.params.id);
@@ -27,9 +21,6 @@ exports.getHostelById = async (req, res) => {
     }
 };
 
-// @desc    Create a new hostel
-// @route   POST /api/v1/hostels
-// @access  Private (Admin)
 exports.createHostel = async (req, res) => {
     try {
         const hostel = await Hostel.create(req.body);
@@ -39,9 +30,6 @@ exports.createHostel = async (req, res) => {
     }
 };
 
-// @desc    Update a hostel by ID
-// @route   PUT /api/v1/hostels/:id
-// @access  Private (Admin)
 exports.updateHostel = async (req, res) => {
     try {
         const hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
@@ -57,9 +45,6 @@ exports.updateHostel = async (req, res) => {
     }
 };
 
-// @desc    Delete a hostel by ID
-// @route   DELETE /api/v1/hostels/:id
-// @access  Private (Admin)
 exports.deleteHostel = async (req, res) => {
     try {
         const hostel = await Hostel.findByIdAndDelete(req.params.id);

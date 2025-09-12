@@ -7,6 +7,16 @@ const HostelSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    block: {
+        type: String,
+        required: [true, 'Block is required'],
+        trim: true
+    },
+    floor: {
+        type: String,
+        required: [true, 'Floor is required'],
+        trim: true
+    },
     location: {
         type: String,
         required: [true, 'Location is required'],
