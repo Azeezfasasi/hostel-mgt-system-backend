@@ -1,3 +1,4 @@
+const RoomRequest = require('../models/RoomRequest');
 const Room = require('../models/Room');
 
 exports.getRooms = async (req, res) => {
@@ -16,6 +17,60 @@ exports.getRoomById = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Room not found' });
         }
         res.status(200).json({ success: true, data: room });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Admin: get all room requests
+exports.getRoomRequests = async (req, res) => {
+    try {
+        const requests = await RoomRequest.find()
+            .populate('student', 'firstName lastName email matricNumber')
+            .populate({
+                path: 'room',
+                populate: { path: 'hostelId', select: 'name' }
+            })
+            .sort({ createdAt: -1 });
+        res.json({ success: true, data: requests });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Admin: approve a room request
+exports.approveRoomRequest = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const request = await RoomRequest.findById(id).populate('room');
+        if (!request) return res.status(404).json({ success: false, message: 'Request not found' });
+        if (request.status !== 'pending') return res.status(400).json({ success: false, message: 'Request already processed' });
+        // Check if bed is available
+        const room = await Room.findById(request.room._id);
+        if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
+        if (room.assignedStudents[request.bed]) return res.status(400).json({ success: false, message: 'Bed already occupied' });
+        // Assign student to bed
+        room.assignedStudents[request.bed] = request.student;
+        room.currentOccupancy = (room.assignedStudents.filter(Boolean).length);
+        await room.save();
+        request.status = 'approved';
+        await request.save();
+        res.json({ success: true, message: 'Request approved and student assigned', data: request });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Admin: decline a room request
+exports.declineRoomRequest = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const request = await RoomRequest.findById(id);
+        if (!request) return res.status(404).json({ success: false, message: 'Request not found' });
+        if (request.status !== 'pending') return res.status(400).json({ success: false, message: 'Request already processed' });
+        request.status = 'declined';
+        await request.save();
+        res.json({ success: true, message: 'Request declined', data: request });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
