@@ -12,7 +12,8 @@ const {
     createRoomRequest,
     getRoomRequests,
     approveRoomRequest,
-    declineRoomRequest
+    declineRoomRequest,
+    getMyRoomRequests
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
@@ -22,6 +23,9 @@ router.post('/requests', auth, createRoomRequest);
 
 // Admin: get all room requests
 router.get('/requests', auth, authorizeRoles, getRoomRequests);
+
+// Student: get their own room requests
+router.get('/my-requests', auth, getMyRoomRequests);
 
 // Admin: approve a room request
 router.post('/requests/:id/approve', auth, authorizeRoles, approveRoomRequest);

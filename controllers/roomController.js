@@ -22,6 +22,21 @@ exports.getRoomById = async (req, res) => {
     }
 };
 
+// Student: get their own room requests
+exports.getMyRoomRequests = async (req, res) => {
+    try {
+        const requests = await RoomRequest.find({ student: req.user.id })
+            .populate({
+                path: 'room',
+                populate: { path: 'hostelId', select: 'name' }
+            })
+            .sort({ createdAt: -1 });
+        res.json({ success: true, data: requests });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 // Admin: get all room requests
 exports.getRoomRequests = async (req, res) => {
     try {
