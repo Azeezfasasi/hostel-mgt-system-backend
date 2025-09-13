@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
   faculty: { type: String },
   course: { type: String },
   level: { type: String },
+  onboardingCompleted: { type: Boolean, default: false },
   role: {
     type: String,
     enum: ['super admin', 'admin', 'student', 'staff'],
