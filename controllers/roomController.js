@@ -1,4 +1,3 @@
-// Assign a student to a room
 const Room = require('../models/Room');
 
 exports.getRooms = async (req, res) => {
@@ -53,6 +52,40 @@ exports.assignRoom = async (req, res) => {
         room.currentOccupancy += 1;
         await room.save();
         res.status(200).json({ success: true, message: 'Student assigned to room', data: room });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Student books a room (with bed index)
+exports.bookRoom = async (req, res) => {
+    try {
+        const studentId = req.user ? req.user.id : req.body.studentId; // Prefer JWT user, fallback to body
+        const { roomId, bedIndex } = req.body;
+        if (!studentId || !roomId || typeof bedIndex !== 'number') {
+            return res.status(400).json({ success: false, message: 'roomId, bedIndex, and studentId are required' });
+        }
+        const room = await Room.findById(roomId);
+        if (!room) {
+            return res.status(404).json({ success: false, message: 'Room not found' });
+        }
+        // Check if bedIndex is valid
+        if (bedIndex < 0 || bedIndex >= room.capacity) {
+            return res.status(400).json({ success: false, message: 'Invalid bed index' });
+        }
+        // Check if bed is already occupied
+        if (room.assignedStudents[bedIndex]) {
+            return res.status(400).json({ success: false, message: 'Bed already occupied' });
+        }
+        // Check if student is already assigned to any bed in this room
+        if (room.assignedStudents.includes(studentId)) {
+            return res.status(400).json({ success: false, message: 'You are already assigned to this room' });
+        }
+        // Assign student to the selected bed
+        room.assignedStudents[bedIndex] = studentId;
+        room.currentOccupancy = (room.assignedStudents.filter(Boolean).length);
+        await room.save();
+        res.status(200).json({ success: true, message: 'Room booked successfully', data: room });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

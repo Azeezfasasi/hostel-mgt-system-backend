@@ -7,11 +7,14 @@ const {
     deleteRoom, 
     assignRoom,
     getAllAllocations,
-    unassignStudent
+    unassignStudent,
+    bookRoom
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
-
 const router = express.Router();
+
+// POST - /api/room/book (student booking)
+router.post('/book', auth, bookRoom);
 
 // Public routes for fetching rooms
 // GET - /api/room
@@ -39,11 +42,5 @@ router.put('/:id', auth, authorizeRoles, updateRoom);
 
 // DELETE - /api/room/:id
 router.delete('/:id', auth, authorizeRoles, deleteRoom);
-
-// GET - /api/room/allocations
-router.get('/allocations', auth, authorizeRoles, getAllAllocations);
-
-// POST - /api/room/unassign
-router.post('/unassign', auth, authorizeRoles, unassignStudent);
 
 module.exports = router;
