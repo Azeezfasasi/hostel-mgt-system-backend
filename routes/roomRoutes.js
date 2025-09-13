@@ -17,6 +17,13 @@ const router = express.Router();
 // GET - /api/room
 router.get('/', getRooms);
 
+
+// GET - /api/room/allocations
+router.get('/allocations', auth, authorizeRoles, getAllAllocations);
+
+// POST - /api/room/unassign
+router.post('/unassign', auth, authorizeRoles, unassignStudent);
+
 // GET - /api/room/:id
 router.get('/:id', getRoomById);
 
