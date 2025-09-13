@@ -5,7 +5,9 @@ const {
     createRoom, 
     updateRoom, 
     deleteRoom, 
-    assignRoom
+    assignRoom,
+    getAllAllocations,
+    unassignStudent
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 
@@ -30,5 +32,11 @@ router.put('/:id', auth, authorizeRoles, updateRoom);
 
 // DELETE - /api/room/:id
 router.delete('/:id', auth, authorizeRoles, deleteRoom);
+
+// GET - /api/room/allocations
+router.get('/allocations', auth, authorizeRoles, getAllAllocations);
+
+// POST - /api/room/unassign
+router.post('/unassign', auth, authorizeRoles, unassignStudent);
 
 module.exports = router;

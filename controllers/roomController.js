@@ -84,3 +84,47 @@ exports.deleteRoom = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// Get all current allocations (students with their room details)
+exports.getAllAllocations = async (req, res) => {
+  try {
+    const rooms = await Room.find()
+      .populate('hostelId', 'name block floor')
+      .populate('assignedStudents', 'firstName lastName email matricNumber');
+    // Flatten allocations: one entry per student per room
+    const allocations = [];
+    rooms.forEach(room => {
+      room.assignedStudents.forEach((student, idx) => {
+        allocations.push({
+          student,
+          hostel: room.hostelId,
+          block: room.roomBlock,
+          floor: room.roomFloor,
+          room: room.roomNumber,
+          bed: idx,
+          roomId: room._id
+        });
+      });
+    });
+    res.json({ success: true, data: allocations });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// Unassign a student from a room
+exports.unassignStudent = async (req, res) => {
+  try {
+    const { roomId, studentId } = req.body;
+    const room = await Room.findById(roomId);
+    if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
+    const idx = room.assignedStudents.indexOf(studentId);
+    if (idx === -1) return res.status(400).json({ success: false, message: 'Student not assigned to this room' });
+    room.assignedStudents.splice(idx, 1);
+    room.currentOccupancy = Math.max(0, room.currentOccupancy - 1);
+    await room.save();
+    res.json({ success: true, message: 'Student unassigned from room' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
