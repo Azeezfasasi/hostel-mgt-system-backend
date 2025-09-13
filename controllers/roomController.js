@@ -1,8 +1,5 @@
 const Room = require('../models/Room');
 
-// @desc    Get all rooms
-// @route   GET /api/v1/rooms
-// @access  Public
 exports.getRooms = async (req, res) => {
     try {
         const rooms = await Room.find().populate('hostelId', 'name');
@@ -12,9 +9,6 @@ exports.getRooms = async (req, res) => {
     }
 };
 
-// @desc    Get a single room by ID
-// @route   GET /api/v1/rooms/:id
-// @access  Public
 exports.getRoomById = async (req, res) => {
     try {
         const room = await Room.findById(req.params.id).populate('hostelId', 'name');
@@ -27,9 +21,6 @@ exports.getRoomById = async (req, res) => {
     }
 };
 
-// @desc    Create a new room
-// @route   POST /api/v1/rooms
-// @access  Private (Admin/Staff)
 exports.createRoom = async (req, res) => {
     try {
         const room = await Room.create(req.body);
@@ -39,9 +30,6 @@ exports.createRoom = async (req, res) => {
     }
 };
 
-// @desc    Update a room by ID
-// @route   PUT /api/v1/rooms/:id
-// @access  Private (Admin/Staff)
 exports.updateRoom = async (req, res) => {
     try {
         const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
@@ -57,9 +45,6 @@ exports.updateRoom = async (req, res) => {
     }
 };
 
-// @desc    Delete a room by ID
-// @route   DELETE /api/v1/rooms/:id
-// @access  Private (Admin/Staff)
 exports.deleteRoom = async (req, res) => {
     try {
         const room = await Room.findByIdAndDelete(req.params.id);
