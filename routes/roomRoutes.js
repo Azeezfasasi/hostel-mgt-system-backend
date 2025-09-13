@@ -8,18 +8,24 @@ const {
     assignRoom,
     getAllAllocations,
     unassignStudent,
-    bookRoom
+    bookRoom,
+    createRoomRequest,
+    getRoomRequests,
+    approveRoomRequest,
+    declineRoomRequest
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
-
-// POST - /api/room/book (student booking)
-router.post('/book', auth, bookRoom);
 
 // Public routes for fetching rooms
 // GET - /api/room
 router.get('/', getRooms);
 
+// Admin: get all room requests
+router.get('/requests', auth, authorizeRoles, getRoomRequests);
+
+// POST - /api/room/book (student booking)
+router.post('/book', auth, bookRoom);
 
 // GET - /api/room/allocations
 router.get('/allocations', auth, authorizeRoles, getAllAllocations);
@@ -31,6 +37,13 @@ router.post('/unassign', auth, authorizeRoles, unassignStudent);
 router.get('/:id', getRoomById);
 
 // Private routes for authenticated users with Admin or Staff roles
+
+// Admin: approve a room request
+router.post('/requests/:id/approve', auth, authorizeRoles, approveRoomRequest);
+
+// Admin: decline a room request
+router.post('/requests/:id/decline', auth, authorizeRoles, declineRoomRequest);
+
 // POST - /api/room
 router.post('/', auth, authorizeRoles, createRoom);
 
