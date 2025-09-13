@@ -30,6 +30,10 @@ const RoomSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    assignedStudents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student',
+    }],
     price: {
         type: Number,
         required: [true, 'Price is required'],

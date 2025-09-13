@@ -4,7 +4,8 @@ const {
     getRoomById, 
     createRoom, 
     updateRoom, 
-    deleteRoom 
+    deleteRoom, 
+    assignRoom
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 
@@ -20,6 +21,9 @@ router.get('/:id', getRoomById);
 // Private routes for authenticated users with Admin or Staff roles
 // POST - /api/room
 router.post('/', auth, authorizeRoles, createRoom);
+
+// POST - /api/room/assign
+router.post('/assign', auth, authorizeRoles, assignRoom);
 
 // PUT - /api/room/:id
 router.put('/:id', auth, authorizeRoles, updateRoom);

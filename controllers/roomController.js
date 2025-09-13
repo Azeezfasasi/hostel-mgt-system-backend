@@ -1,3 +1,4 @@
+// Assign a student to a room
 const Room = require('../models/Room');
 
 exports.getRooms = async (req, res) => {
@@ -27,6 +28,33 @@ exports.createRoom = async (req, res) => {
         res.status(201).json({ success: true, data: room });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.assignRoom = async (req, res) => {
+    try {
+        const { studentId, roomId } = req.body;
+        if (!studentId || !roomId) {
+            return res.status(400).json({ success: false, message: 'studentId and roomId are required' });
+        }
+        const room = await Room.findById(roomId);
+        if (!room) {
+            return res.status(404).json({ success: false, message: 'Room not found' });
+        }
+        // Check if room is full
+        if (room.currentOccupancy >= room.capacity) {
+            return res.status(400).json({ success: false, message: 'Room is already full' });
+        }
+        // Check if student is already assigned
+        if (room.assignedStudents.includes(studentId)) {
+            return res.status(400).json({ success: false, message: 'Student already assigned to this room' });
+        }
+        room.assignedStudents.push(studentId);
+        room.currentOccupancy += 1;
+        await room.save();
+        res.status(200).json({ success: true, message: 'Student assigned to room', data: room });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
