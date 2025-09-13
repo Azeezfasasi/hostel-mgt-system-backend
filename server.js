@@ -29,7 +29,7 @@ app.use(cors({
     'http://localhost:5173'
   ], // your frontend URL
   credentials: true, // if you use cookies/auth
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE',, 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 // Handle preflight requests for all routes
