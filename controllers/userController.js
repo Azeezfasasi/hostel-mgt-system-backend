@@ -354,6 +354,18 @@ exports.disableUser = async (req, res) => {
   }
 };
 
+// 6. Admin/Super Admin: Enable user
+exports.enableUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, { isActive: true }, { new: true });
+    if (!user) return res.status(404).json({ error: 'User not found.' });
+    res.json({ message: 'User enabled.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to enable user.', details: err.message });
+  }
+};
+
 // Admin: Reset password for any user
 exports.resetUserPassword = async (req, res) => {
   try {

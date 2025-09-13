@@ -11,6 +11,7 @@ const {
   editUser,
   deleteUser,
   disableUser,
+  enableUser,
   resetUserPassword,
   getAllAdmins
 } = require('../controllers/userController');
@@ -54,5 +55,8 @@ router.delete('/:id', auth, authorizeRoles, deleteUser);
 
 // PATCH /api/users:id/disable
 router.patch('/:id/disable', auth, authorizeRoles, disableUser);
+
+// PATCH /api/users/:id/enable
+router.patch('/:id/enable', auth, authorizeRoles, enableUser);
 
 module.exports = router;
