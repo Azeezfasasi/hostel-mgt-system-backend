@@ -32,7 +32,7 @@ const RoomSchema = new mongoose.Schema({
     },
     assignedStudents: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student',
+        ref: 'User',
     }],
     price: {
         type: Number,
