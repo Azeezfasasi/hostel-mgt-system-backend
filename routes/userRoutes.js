@@ -16,6 +16,20 @@ const {
   getAllAdmins
 } = require('../controllers/userController');
 const { auth, authorizeRoles } = require('../middleware/auth');
+const { upload } = require('../utils/cloudinary');
+
+// POST /api/users/upload-profile-image
+router.post('/upload-profile-image', auth, upload.single('profileImage'), async (req, res) => {
+  try {
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({ error: 'No image uploaded.' });
+    }
+    // Cloudinary URL is in req.file.path
+    res.json({ url: req.file.path });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to upload image.', details: err.message });
+  }
+});
 
 // Public routes 
 // POST /api/users/register
