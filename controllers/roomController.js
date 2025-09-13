@@ -38,6 +38,26 @@ exports.getRoomRequests = async (req, res) => {
     }
 };
 
+// Student: create a room request
+exports.createRoomRequest = async (req, res) => {
+    try {
+        const studentId = req.user ? req.user.id : req.body.studentId;
+        const { roomId, bed } = req.body;
+        if (!studentId || !roomId || typeof bed !== 'number') {
+            return res.status(400).json({ success: false, message: 'roomId, bed, and studentId are required' });
+        }
+        // Check for duplicate pending request
+        const existing = await RoomRequest.findOne({ student: studentId, room: roomId, bed, status: 'pending' });
+        if (existing) {
+            return res.status(400).json({ success: false, message: 'You already have a pending request for this bed.' });
+        }
+        const request = await RoomRequest.create({ student: studentId, room: roomId, bed });
+        res.status(201).json({ success: true, data: request });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 // Admin: approve a room request
 exports.approveRoomRequest = async (req, res) => {
     try {
