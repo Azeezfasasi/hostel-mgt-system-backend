@@ -1,5 +1,7 @@
 const express = require('express');
 const { initCredoPayment, confirmPayment, getPayments, verifyCredoPayment }  = require('../controllers/paymentController.js');
+const router = express.Router();
+
 // POST - /api/payment/init (Credo direct API)
 router.post("/init", initCredoPayment);
 
