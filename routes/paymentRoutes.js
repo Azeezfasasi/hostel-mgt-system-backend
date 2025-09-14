@@ -3,8 +3,13 @@ const { initiatePayment, confirmPayment, getPayments }  = require('../controller
 
 const router = express.Router();
 
+// POST - /api/payment
 router.post("/", initiatePayment);
+
+// PUT - /api/payment/:id/confirm
 router.put("/:id/confirm", confirmPayment);
+
+// GET - /api/payment
 router.get("/", getPayments);
 
 module.exports = router;
