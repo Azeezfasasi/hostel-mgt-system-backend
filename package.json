@@ -7,6 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "axios": "^1.12.1",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
