@@ -25,7 +25,9 @@ exports.initCredoPayment = async (req, res) => {
     );
     res.json(response.data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to initialize payment', details: err.message });
+    console.error('Credo Init Error:', err.message, err.response?.data);
+    res.status(500).json({ error: 'Failed to initialize payment', details: err.message, credo: err.response?.data });
+    // res.status(500).json({ error: 'Failed to initialize payment', details: err.message });
   }
 };
 
