@@ -1,3 +1,52 @@
+const axios = require('axios');
+// Credo Payment Initialization (Direct API Integration)
+exports.initCredoPayment = async (req, res) => {
+  try {
+    const { amount, email, callbackUrl, reference, customerFirstName, customerLastName, customerPhoneNumber, metadata } = req.body;
+    const response = await axios.post(
+      'https://api.credocentral.com/transaction/initialize',
+      {
+        amount,
+        currency: 'NGN',
+        email,
+        reference,
+        customerFirstName,
+        customerLastName,
+        customerPhoneNumber,
+        callbackUrl,
+        metadata
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CREDO_SECRET_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to initialize payment', details: err.message });
+  }
+};
+
+// Credo Payment Verification
+exports.verifyCredoPayment = async (req, res) => {
+  try {
+    const { reference } = req.query;
+    const response = await axios.get(
+      `https://api.credocentral.com/transaction/${reference}/verify`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CREDO_SECRET_KEY}`
+        }
+      }
+    );
+    // You can update booking/payment status here if needed
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json({ error: 'Verification failed', details: err.message });
+  }
+};
 const Payment = require('../models/Payment.js');
 const Booking = require('../models/Booking.js');
 
