@@ -7,6 +7,11 @@ const HostelSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    hostelCampus: {
+        type: String,
+        required: [true, 'Hostel campus is required'],
+        trim: true
+    },
     block: {
         type: String,
         required: [true, 'Block is required'],
