@@ -16,7 +16,6 @@ const router = express.Router();
 router.get('/', getHostels);
 
 // GET - /api/hostel/stats (public stats for students)
-const { getPublicStats } = require('../controllers/hostelController');
 router.get('/stats', getPublicStats);
 
 // GET - /api/hostel/:id
