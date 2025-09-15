@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   state: { type: String },
   zipCode: { type: String },
   bio: { type: String },
-  matricNumber: { type: String },
+  matricNumber: { type: String, unique: true },
   profileImage: { type: String },
   campusName: { type: String },
   department: { type: String },
