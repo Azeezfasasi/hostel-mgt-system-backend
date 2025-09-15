@@ -26,6 +26,7 @@ exports.getRoomById = async (req, res) => {
 exports.getMyRoomRequests = async (req, res) => {
     try {
         const requests = await RoomRequest.find({ student: req.user.id })
+            .populate('student')
             .populate({
                 path: 'room',
                 populate: { path: 'hostelId', select: 'name' }
