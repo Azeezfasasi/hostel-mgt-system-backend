@@ -3,7 +3,7 @@ const Room = require('../models/Room');
 
 exports.getRooms = async (req, res) => {
     try {
-        const rooms = await Room.find().populate('hostelId', 'name');
+        const rooms = await Room.find().populate('hostelId', 'name hostelCampus');
         res.status(200).json({ success: true, count: rooms.length, data: rooms });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -12,7 +12,7 @@ exports.getRooms = async (req, res) => {
 
 exports.getRoomById = async (req, res) => {
     try {
-        const room = await Room.findById(req.params.id).populate('hostelId', 'name');
+        const room = await Room.findById(req.params.id).populate('hostelId', 'name hostelCampus');
         if (!room) {
             return res.status(404).json({ success: false, message: 'Room not found' });
         }
