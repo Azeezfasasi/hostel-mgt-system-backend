@@ -217,7 +217,7 @@ exports.deleteRoom = async (req, res) => {
 exports.getAllAllocations = async (req, res) => {
   try {
     const rooms = await Room.find()
-      .populate('hostelId', 'name block floor')
+      .populate('hostelId', 'name hostelCampus block floor')
       .populate('assignedStudents', 'firstName lastName email matricNumber');
     // Flatten allocations: one entry per student per room
     const allocations = [];
