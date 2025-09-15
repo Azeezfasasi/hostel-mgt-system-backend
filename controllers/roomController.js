@@ -218,7 +218,7 @@ exports.getAllAllocations = async (req, res) => {
   try {
     const rooms = await Room.find()
       .populate('hostelId', 'name hostelCampus block floor')
-      .populate('assignedStudents', 'firstName lastName email matricNumber');
+      .populate('assignedStudents', 'firstName lastName email matricNumber profileImage');
     // Flatten allocations: one entry per student per room
     const allocations = [];
     rooms.forEach(room => {
