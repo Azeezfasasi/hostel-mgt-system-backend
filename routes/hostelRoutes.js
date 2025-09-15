@@ -4,7 +4,8 @@ const {
     getHostelById, 
     createHostel, 
     updateHostel, 
-    deleteHostel 
+    deleteHostel,
+    getPublicStats
 } = require('../controllers/hostelController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 
@@ -13,6 +14,10 @@ const router = express.Router();
 // Public routes
 // GET - /api/hostel
 router.get('/', getHostels);
+
+// GET - /api/hostel/stats (public stats for students)
+const { getPublicStats } = require('../controllers/hostelController');
+router.get('/stats', getPublicStats);
 
 // GET - /api/hostel/:id
 router.get('/:id', getHostelById);
