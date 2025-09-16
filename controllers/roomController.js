@@ -243,17 +243,18 @@ exports.getAllAllocations = async (req, res) => {
 
 // Unassign a student from a room
 exports.unassignStudent = async (req, res) => {
-  try {
-    const { roomId, studentId } = req.body;
-    const room = await Room.findById(roomId);
-    if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
-    const idx = room.assignedStudents.indexOf(studentId);
-    if (idx === -1) return res.status(400).json({ success: false, message: 'Student not assigned to this room' });
-    room.assignedStudents.splice(idx, 1);
-    room.currentOccupancy = Math.max(0, room.currentOccupancy - 1);
-    await room.save();
-    res.json({ success: true, message: 'Student unassigned from room' });
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
+    try {
+        const { roomId, studentId } = req.body;
+        const room = await Room.findById(roomId);
+        if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
+        // Use ObjectId comparison for robustness
+        const idx = room.assignedStudents.findIndex(s => s && s.equals ? s.equals(studentId) : s == studentId);
+        if (idx === -1) return res.status(400).json({ success: false, message: 'Student not assigned to this room' });
+        room.assignedStudents.splice(idx, 1);
+        room.currentOccupancy = Math.max(0, room.currentOccupancy - 1);
+        await room.save();
+        res.json({ success: true, message: 'Student unassigned from room' });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
 };
