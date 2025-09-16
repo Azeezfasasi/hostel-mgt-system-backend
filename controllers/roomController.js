@@ -226,6 +226,41 @@ exports.deleteRoom = async (req, res) => {
     }
 };
 
+// Get true room history for all students
+exports.getAllRoomHistory = async (req, res) => {
+    try {
+        // Find all room requests (approved, declined, unassigned)
+        const requests = await RoomRequest.find()
+            .populate('student', 'firstName lastName otherName email matricNumber dob phone emergencyContact nextOfKinName nextOfKinRelationship nextOfKinPhone nin department course level profileImage gender onboardingCompleted')
+            .populate({
+                path: 'room',
+                populate: { path: 'hostelId', select: 'name' }
+            })
+            .sort({ createdAt: -1 });
+        // Group by student
+        const history = {};
+        requests.forEach(r => {
+            const s = r.student;
+            if (!s || !s._id) return;
+            if (!history[s._id]) history[s._id] = { student: s, rooms: [] };
+            history[s._id].rooms.push({
+                status: r.status,
+                hostel: r.room?.hostelId?.name,
+                block: r.room?.roomBlock,
+                floor: r.room?.roomFloor,
+                room: r.room?.roomNumber,
+                bed: r.bed !== undefined ? `Bed ${Number(r.bed) + 1}` : '-',
+                roomId: r.room?._id,
+                createdAt: r.createdAt,
+                requestId: r._id,
+            });
+        });
+        res.json({ success: true, data: Object.values(history) });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
 // Get all current allocations (students with their room details)
 exports.getAllAllocations = async (req, res) => {
   try {

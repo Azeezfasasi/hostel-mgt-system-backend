@@ -13,7 +13,8 @@ const {
     getRoomRequests,
     approveRoomRequest,
     declineRoomRequest,
-    getMyRoomRequests
+    getMyRoomRequests,
+    getAllRoomHistory,
 } = require('../controllers/roomController');
 const { auth, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
@@ -40,8 +41,11 @@ router.post('/book', auth, bookRoom);
 // GET - /api/room
 router.get('/', getRooms);
 
-// GET - /api/room/allocations
+// GET - /api/room/allocations (current allocations)
 router.get('/allocations', auth, authorizeRoles, getAllAllocations);
+
+// GET - /api/room/history (true room history for all students)
+router.get('/history', auth, authorizeRoles, getAllRoomHistory);
 
 // POST - /api/room/unassign
 router.post('/unassign', auth, authorizeRoles, unassignStudent);
