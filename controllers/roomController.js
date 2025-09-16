@@ -36,15 +36,17 @@ exports.getMyRoomRequests = async (req, res) => {
                 populate: { path: 'hostelId', select: 'name' }
             })
             .sort({ createdAt: -1 });
-        // Ensure status and room details are present for approved requests
-        const formatted = requests.map(r => ({
+        // Only return approved requests with valid room details for the card
+        const formatted = requests
+          .filter(r => r.status === 'approved' && r.room)
+          .map(r => ({
             _id: r._id,
             status: r.status,
             bed: r.bed,
             createdAt: r.createdAt,
             student: r.student,
             room: r.room,
-        }));
+          }));
         res.json({ success: true, requests: formatted });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
