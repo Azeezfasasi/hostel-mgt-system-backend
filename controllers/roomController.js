@@ -71,7 +71,8 @@ exports.createRoomRequest = async (req, res) => {
         if (existing) {
             return res.status(400).json({ success: false, message: 'You already have a pending request for this bed.' });
         }
-        const request = await RoomRequest.create({ student: studentId, room: roomId, bed });
+        // Create request with paymentStatus: 'pending'
+        const request = await RoomRequest.create({ student: studentId, room: roomId, bed, status: 'pending', paymentStatus: 'pending' });
         res.status(201).json({ success: true, data: request });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
