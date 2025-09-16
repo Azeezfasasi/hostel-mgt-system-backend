@@ -108,7 +108,8 @@ exports.declineRoomRequest = async (req, res) => {
         const { id } = req.params;
         const request = await RoomRequest.findById(id);
         if (!request) return res.status(404).json({ success: false, message: 'Request not found' });
-        if (request.status !== 'pending') return res.status(400).json({ success: false, message: 'Request already processed' });
+        // Allow declining both pending and approved requests
+        if (request.status === 'declined') return res.status(400).json({ success: false, message: 'Request already processed' });
         request.status = 'declined';
         await request.save();
         res.json({ success: true, message: 'Request declined', data: request });
