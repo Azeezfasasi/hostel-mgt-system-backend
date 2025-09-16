@@ -248,9 +248,13 @@ exports.unassignStudent = async (req, res) => {
         const { roomId, studentId } = req.body;
         const room = await Room.findById(roomId);
         if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
+        // Debug logging
+        console.log('Assigned students:', room.assignedStudents.map(s => s && s.toString()), 'Student to unassign:', studentId);
         // Use ObjectId comparison for robustness
         const idx = room.assignedStudents.findIndex(s => s && s.equals ? s.equals(studentId) : s == studentId);
-        if (idx === -1) return res.status(400).json({ success: false, message: 'Student not assigned to this room' });
+        if (idx === -1) {
+            return res.status(400).json({ success: false, message: `Student not assigned to this room. Assigned: ${room.assignedStudents.map(s => s && s.toString()).join(', ')}. Tried to unassign: ${studentId}` });
+        }
         room.assignedStudents.splice(idx, 1);
         room.currentOccupancy = Math.max(0, room.currentOccupancy - 1);
         await room.save();
