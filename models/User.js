@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   address: { type: String },
   city: { type: String },
   state: { type: String },
+  localGovernment: { type: String },
   zipCode: { type: String },
   bio: { type: String },
   matricNumber: { type: String, unique: true },
