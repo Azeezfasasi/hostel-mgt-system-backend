@@ -310,10 +310,12 @@ exports.getProfile = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const updates = { ...req.body };
+    // Prevent changing unique fields
     delete updates.role; // Prevent role change
     delete updates.isActive; // Prevent self-disabling
+    delete updates.email; // Prevent email change
+    delete updates.matricNumber; // Prevent matric number change
     if (updates.password) delete updates.password; // Prevent password change here
-    // const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true, runValidators: true }).select('-password');
     const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true, runValidators: true });
     res.json(user);
   } catch (err) {
