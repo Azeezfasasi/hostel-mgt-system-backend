@@ -237,6 +237,17 @@ exports.getAllRoomHistory = async (req, res) => {
                 populate: { path: 'hostelId', select: 'name' }
             })
             .sort({ createdAt: -1 });
+        console.log('RoomRequest count:', requests.length);
+        requests.forEach((r, i) => {
+            console.log(`Request[${i}]:`, {
+                status: r.status,
+                student: r.student && r.student.matricNumber,
+                room: r.room && r.room.roomNumber,
+                hostel: r.room && r.room.hostelId && r.room.hostelId.name,
+                block: r.room && r.room.roomBlock,
+                floor: r.room && r.room.roomFloor,
+            });
+        });
         // Group by student
         const history = {};
         requests.forEach(r => {
