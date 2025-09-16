@@ -90,8 +90,8 @@ exports.approveRoomRequest = async (req, res) => {
         const room = await Room.findById(request.room._id);
         if (!room) return res.status(404).json({ success: false, message: 'Room not found' });
         if (room.assignedStudents[request.bed]) return res.status(400).json({ success: false, message: 'Bed already occupied' });
-        // Assign student to bed
-        room.assignedStudents[request.bed] = request.student;
+        // Assign student to bed (ensure ObjectId)
+        room.assignedStudents[request.bed] = request.student._id ? request.student._id : request.student;
         room.currentOccupancy = (room.assignedStudents.filter(Boolean).length);
         await room.save();
         request.status = 'approved';
