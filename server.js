@@ -18,6 +18,7 @@ const announcementRoutes = require('./routes/announcementRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes.js');
 const disciplinaryRoutes = require('./routes/disciplinaryRoutes.js');
 const furnitureRoutes = require('./routes/furnitureRoutes.js');
+const facilityRoutes = require('./routes/facilityRoutes.js');
 require('dotenv').config();
 
 const app = express();
@@ -63,6 +64,7 @@ app.use('/api/announcement', announcementRoutes)
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/disciplinary', disciplinaryRoutes);
 app.use('/api/furniture', furnitureRoutes);
+app.use('/api/facility', facilityRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hostel Management System Backend Running');
