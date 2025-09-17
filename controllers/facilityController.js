@@ -49,10 +49,11 @@ exports.deleteFacilityCategory = async (req, res) => {
 // Create a facility
 exports.createFacility = async (req, res) => {
   try {
-    const { name, location } = req.body;
-    if (!name) return res.status(400).json({ error: 'Name required' });
-    const facility = await Facility.create({ name, location });
-    res.status(201).json(facility);
+    const { name, location, category, status } = req.body;
+    if (!name || !category) return res.status(400).json({ error: 'Name and category required' });
+    const facility = await Facility.create({ name, location, category, status });
+    const populatedFacility = await Facility.findById(facility._id).populate('category');
+    res.status(201).json(populatedFacility);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -61,7 +62,7 @@ exports.createFacility = async (req, res) => {
 // Get all facilities
 exports.getAllFacilities = async (req, res) => {
   try {
-    const facilities = await Facility.find();
+    const facilities = await Facility.find().populate('category');
     res.json(facilities);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,7 +73,7 @@ exports.getAllFacilities = async (req, res) => {
 exports.getFacilityById = async (req, res) => {
   try {
     const { id } = req.params;
-    const facility = await Facility.findById(id);
+    const facility = await Facility.findById(id).populate('category');
     if (!facility) return res.status(404).json({ error: 'Facility not found' });
     res.json(facility);
   } catch (err) {
@@ -85,7 +86,7 @@ exports.updateFacility = async (req, res) => {
   try {
     const { id } = req.params;
     const update = req.body;
-    const facility = await Facility.findByIdAndUpdate(id, update, { new: true });
+    const facility = await Facility.findByIdAndUpdate(id, update, { new: true }).populate('category');
     if (!facility) return res.status(404).json({ error: 'Facility not found' });
     res.json(facility);
   } catch (err) {
