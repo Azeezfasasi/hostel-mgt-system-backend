@@ -21,5 +21,6 @@ router.patch('/furniture/:id/status', furnitureController.changeStatus);
 router.post('/furniture/:id/report-damage', furnitureController.reportDamage);
 router.get('/furniture/damage-reports', furnitureController.getAllDamageReports);
 router.get('/furniture/damage-reports/student/:studentId', furnitureController.getStudentDamageReports);
+router.patch('/furniture/:furnitureId/report/:reportId/repair', furnitureController.updateRepairInfo);
 
 module.exports = router;

@@ -168,3 +168,21 @@ exports.getStudentDamageReports = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Admin: Update repair status and update for a damage report
+exports.updateRepairInfo = async (req, res) => {
+  try {
+    const { furnitureId, reportId } = req.params;
+    const { repairStatus, repairUpdate } = req.body;
+    const furniture = await Furniture.findById(furnitureId);
+    if (!furniture) return res.status(404).json({ error: 'Furniture not found' });
+    const report = furniture.damageReports.id(reportId);
+    if (!report) return res.status(404).json({ error: 'Damage report not found' });
+    if (repairStatus) report.repairStatus = repairStatus;
+    if (repairUpdate) report.repairUpdate = repairUpdate;
+    await furniture.save();
+    res.json(report);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
