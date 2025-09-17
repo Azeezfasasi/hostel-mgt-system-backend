@@ -1,3 +1,51 @@
+const FacilityCategory = require('../models/FacilityCategory');
+
+// Create facility category
+exports.createFacilityCategory = async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) return res.status(400).json({ error: 'Name required' });
+    const category = await FacilityCategory.create({ name });
+    res.status(201).json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get all facility categories
+exports.getFacilityCategories = async (req, res) => {
+  try {
+    const categories = await FacilityCategory.find();
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Edit facility category
+exports.editFacilityCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const category = await FacilityCategory.findByIdAndUpdate(id, { name }, { new: true });
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    res.json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Delete facility category
+exports.deleteFacilityCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const category = await FacilityCategory.findByIdAndDelete(id);
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    res.json({ message: 'Category deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 // Create a facility
 exports.createFacility = async (req, res) => {
   try {

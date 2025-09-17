@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const facilityController = require('../controllers/facilityController');
 
+// Facility Category CRUD
+router.post('/facility-categories', facilityController.createFacilityCategory);
+router.get('/facility-categories', facilityController.getFacilityCategories);
+router.put('/facility-categories/:id', facilityController.editFacilityCategory);
+router.delete('/facility-categories/:id', facilityController.deleteFacilityCategory);
 
 // Facility CRUD
 router.post('/facility', facilityController.createFacility);
