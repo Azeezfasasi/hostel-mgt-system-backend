@@ -115,3 +115,28 @@ exports.getAllDamageReports = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Edit furniture category
+exports.editCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const category = await FurnitureCategory.findByIdAndUpdate(id, { name }, { new: true });
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    res.json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Delete furniture category
+exports.deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const category = await FurnitureCategory.findByIdAndDelete(id);
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    res.json({ message: 'Category deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

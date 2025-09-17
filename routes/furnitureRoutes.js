@@ -5,6 +5,8 @@ const furnitureController = require('../controllers/furnitureController');
 // Furniture Category
 router.post('/furniture-categories', furnitureController.createCategory);
 router.get('/furniture-categories', furnitureController.getCategories);
+router.put('/furniture-categories/:id', furnitureController.editCategory);
+router.delete('/furniture-categories/:id', furnitureController.deleteCategory);
 
 // Furniture CRUD
 router.post('/furniture', furnitureController.createFurniture);
