@@ -140,3 +140,31 @@ exports.deleteCategory = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Fetch damage reports for a specific student
+exports.getStudentDamageReports = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    // Find all furniture where damageReports contains this student
+    const furniture = await Furniture.find({ 'damageReports.student': studentId }).populate('damageReports.student').populate('category');
+    // Flatten and filter damageReports for this student
+    const reports = [];
+    furniture.forEach(f => {
+      f.damageReports.forEach(r => {
+        if (r.student && r.student._id?.toString() === studentId) {
+          reports.push({
+            furnitureName: f.name,
+            location: f.location,
+            description: r.description,
+            reportedAt: r.reportedAt,
+            status: f.status,
+            category: f.category?.name || '',
+          });
+        }
+      });
+    });
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
