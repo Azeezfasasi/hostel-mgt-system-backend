@@ -159,6 +159,8 @@ exports.getStudentDamageReports = async (req, res) => {
             reportedAt: r.reportedAt,
             status: f.status,
             category: f.category?.name || '',
+            repairStatus: r.repairStatus,
+            repairUpdate: r.repairUpdate
           });
         }
       });
