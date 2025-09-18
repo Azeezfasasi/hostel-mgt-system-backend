@@ -4,8 +4,7 @@ const HostelSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Hostel name is required'],
-        trim: true,
-        unique: true
+        trim: true
     },
     hostelCampus: {
         type: String,
