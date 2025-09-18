@@ -47,7 +47,5 @@ const HostelSchema = new mongoose.Schema({
     timestamps: true // Adds createdAt and updatedAt fields
 });
 
-// Compound unique index for name + hostelCampus
-HostelSchema.index({ name: 1, hostelCampus: 1 }, { unique: true });
 
 module.exports = mongoose.model('Hostel', HostelSchema);
