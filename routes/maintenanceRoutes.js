@@ -1,5 +1,5 @@
 const express = require('express');
-const { createMaintenanceRequest, getMaintenanceRequests, updateMaintenanceStatus }  = require('../controllers/maintenanceController');
+const { createMaintenanceRequest, getMaintenanceRequests, updateMaintenanceStatus, getMaintenanceRequest, deleteMaintenanceRequest }  = require('../controllers/maintenanceController');
 
 const router = express.Router();
 
