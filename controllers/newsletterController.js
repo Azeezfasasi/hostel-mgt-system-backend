@@ -42,16 +42,16 @@ exports.subscribe = async (req, res) => {
       subscriber = await NewsletterSubscriber.create({ email, name, unsubscribeToken });
     }
     // Send confirmation email to subscriber
-    const unsubscribeUrl = `${process.env.FRONTEND_URL || 'https://mgv-tech.com'}/app/unsubscribenewsletter/${unsubscribeToken}`;
+    const unsubscribeUrl = `${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/app/unsubscribenewsletter/${unsubscribeToken}`;
     await transporter.sendMail({
       to: email,
-      from: `"Marshall Global Ventures" <${process.env.EMAIL_USER}>`,
+      from: `"Unizik Hostel Portal" <${process.env.EMAIL_USER}>`,
       subject: `Newsletter Subscription Confirmed, ${name || email}`,
       html: `
       <div style="max-width:580px;margin:auto;border-radius:8px;border:1px solid #e0e0e0;background:#fff;overflow:hidden;font-family:'Inter',sans-serif;">
         <!-- Header Section -->
         <div style="background:#00B9F1;padding:24px 0;text-align:center;">
-          <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Welcome to Marshall Global Ventures!</h1>
+          <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Welcome to Unizik Hostel Portal!</h1>
         </div>
 
         <!-- Body Section -->
@@ -59,26 +59,20 @@ exports.subscribe = async (req, res) => {
           <p style="font-size:1.1rem;color:#222;margin-bottom:16px;">Hi ${name || email}</p>
           <p style="font-size:1.1rem;color:#222;margin-bottom:16px;">Thank you for subscribing to our newsletter! &#127881;</p>
           <p style="color:#222;line-height:1.5;margin-bottom:24px;">You will now receive the latest updates, exclusive offers, and expert tips from our team, directly to your inbox. We're excited to have you with us!</p>
-          <a href="https://mgv-tech.com" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">Visit Our Website</a>
-          <p style="font-size:0.95rem;color:#555;margin-top:32px;line-height:1.5;">If you did not subscribe to this newsletter, please ignore this email. If you believe this is an error or wish to stop receiving these emails, you can <a href="https://mgv-tech.com/app/unsubscribenewsletter/${unsubscribeToken}" style="color:#00B9F1;text-decoration:underline;">unsubscribe here</a> at any time.</p>
-          <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Marshall Global Ventures Team</p>
+          <a href="${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">Visit Our Website</a>
+          <p style="font-size:0.95rem;color:#555;margin-top:32px;line-height:1.5;">If you did not subscribe to this newsletter, please ignore this email. If you believe this is an error or wish to stop receiving these emails, you can <a href="${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/app/unsubscribenewsletter/${unsubscribeToken}" style="color:#00B9F1;text-decoration:underline;">unsubscribe here</a> at any time.</p>
+          <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Unizik Hostel Portal Team</p>
         </div>
 
         <!-- Footer Section -->
         <div style="background:#f0f0f0;padding:24px;text-align:center;color:#666;font-size:0.85rem;line-height:1.6;border-top:1px solid #e5e5e5;">
-          <p style="margin:0 0 8px 0;">&copy; 2025 Marshall Global Ventures. All rights reserved.</p>
+          <p style="margin:0 0 8px 0;">&copy; 2025 Unizik Hostel Portal. All rights reserved.</p>
           <p style="margin:0 0 8px 0;">
-            123 Ikorodu Road, Lagos, Nigeria
+            Awka, Anambra State, Nigeria
           </p>
           <p style="margin:0 0 16px 0;">
-            Email: <a href="mailto:info@mgv-tech.com" style="color:#00B9F1;text-decoration:none;">info@mgv-tech.com</a> | Phone: <a href="tel:+2348103069432" style="color:#00B9F1;text-decoration:none;">(+234) 08103069432</a>
+            Email: <a href="mailto:info@unizikportal.edu.ng" style="color:#00B9F1;text-decoration:none;">info@unizikportal.edu.ng</a> | Phone: <a href="tel:+2348067355116" style="color:#00B9F1;text-decoration:none;">(+234) 08067355116</a>
           </p>
-          <div style="margin-top:10px;">
-            <a href="https://linkedin.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">LinkedIn</a> |
-            <a href="https://instagram.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Instagram</a> |
-            <a href="https://tiktok.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">TikTok</a> |
-            <a href="https://facebook.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Facebook</a>
-          </div>
         </div>
       </div>
       `
@@ -193,7 +187,7 @@ exports.sendNewsletter = async (req, res) => {
     // --- Define the Newsletter Header HTML (remains static) ---
     const headerHtml = `
       <div style="background:#00B9F1;padding:24px 0;text-align:center;">
-        <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Marshall Global Ventures</h1>
+        <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Unizik Hostel Portal</h1>
       </div>
     `;
 
@@ -204,27 +198,21 @@ exports.sendNewsletter = async (req, res) => {
     const sendPromises = subscribersToEmail.map(async (subscriber) => {
       const personalizedName = subscriber.name || subscriber.email;
       const unsubscribeToken = subscriber.unsubscribeToken; // Get the unique token for this subscriber
-      const unsubscribeUrl = `${process.env.FRONTEND_URL || 'https://mgv-tech.com'}/app/unsubscribenewsletter/${unsubscribeToken}`;
+      const unsubscribeUrl = `${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/app/unsubscribenewsletter/${unsubscribeToken}`;
 
       // --- Define the Newsletter Footer HTML (personalized unsubscribe link) ---
       const footerHtml = `
         <div style="background:#f0f0f0;padding:24px;text-align:center;color:#666;font-size:0.85rem;line-height:1.6;border-top:1px solid #e5e5e5;">
-          <p style="margin:0 0 8px 0;">&copy; 2025 Marshall Global Ventures. All rights reserved.</p>
+          <p style="margin:0 0 8px 0;">&copy; 2025 Unizik Hostel Portal. All rights reserved.</p>
           <p style="margin:0 0 8px 0;">
-            123 Ikorodu Road, Lagos, Nigeria
+            Awka, Anambra State, Nigeria
           </p>
           <p style="margin:0 0 16px 0;">
-            Email: <a href="mailto:info@mgv-tech.com" style="color:#00B9F1;text-decoration:none;">info@mgv-tech.com</a> | Phone: <a href="tel:+2348103069432" style="color:#00B9F1;text-decoration:none;">(+234) 08103069432</a>
+            Email: <a href="mailto:info@unizikportal.edu.ng" style="color:#00B9F1;text-decoration:none;">info@unizikportal.edu.ng</a> | Phone: <a href="tel:+2348067355116" style="color:#00B9F1;text-decoration:none;">(+234) 08067355116</a>
           </p>
-          <div style="margin-top:10px;">
-            <a href="https://linkedin.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">LinkedIn</a> |
-            <a href="https://instagram.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Instagram</a> |
-            <a href="https://tiktok.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">TikTok</a> |
-            <a href="https://facebook.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Facebook</a>
-          </div>
           <p style="font-size:0.8rem;color:#999;margin-top:20px;">
-            You are receiving this email because you subscribed to the Marshall Global Ventures newsletter.
-            To unsubscribe, please click <a href="https://mgv-tech.com/app/unsubscribenewsletter/${unsubscribeToken}" style="color:#00B9F1;text-decoration:underline;">here</a>.
+            You are receiving this email because you subscribed to the Unizik Hostel Portal newsletter.
+            To unsubscribe, please click <a href="https://hostel-mgt-system.netlify.app/app/unsubscribenewsletter/${unsubscribeToken}" style="color:#00B9F1;text-decoration:underline;">here</a>.
           </p>
         </div>
       `;

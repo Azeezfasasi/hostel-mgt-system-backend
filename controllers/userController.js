@@ -41,50 +41,44 @@ exports.register = async (req, res) => {
     // Send welcome email to user
     await transporter.sendMail({
       to: user.email,
-      from: `"Hostel Management System" <${process.env.EMAIL_USER}>`,
-      subject: 'Welcome to Hostel Management System',
+      from: `"Unizik Hostel Portal" <${process.env.EMAIL_USER}>`,
+      subject: 'Welcome to Unizik Hostel Portal',
       html: `
       <div style="max-width:580px;margin:auto;border-radius:8px;border:1px solid #e0e0e0;background:#fff;overflow:hidden;font-family:'Inter',sans-serif;">
 
         <!-- Header section -->
         <div style="background:#00B9F1;padding:24px 0;text-align:center;">
-            <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Hostel Management System!</h1>
+            <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Unizik Hostel Portal!</h1>
         </div>
 
         <!-- Body Section -->
         <div style="padding:32px 24px 24px 24px;">
           <div style="padding:32px 24px 24px 24px;color:#222;line-height:1.6;">
             <p style="font-size:1.1rem;margin-bottom:16px;">Hi ${firstName},</p>
-            <h2 style="font-size:1.8rem;color:#00B9F1;margin-bottom:16px;">Your Account at Hostel Management System Has Been Created!</h2>
+            <h2 style="font-size:1.8rem;color:#00B9F1;margin-bottom:16px;">Your Account at Unizik Hostel Portal Has Been Created!</h2>
             <p style="font-size:1.1rem;margin-bottom:16px;">
-              We are thrilled to welcome you to the Hostel Management System community! Your account has been successfully created.
+              We are thrilled to welcome you to the Unizik Hostel Portal community! Your account has been successfully created.
             </p>
             <p style="color:#222;line-height:1.5;margin-bottom:24px;">
               You can now log in to manage your profile, view your orders, track quote requests, and explore all the services and products we offer.
             </p>
-            <a href="${process.env.FRONTEND_URL || 'https://mgv-tech.com'}/login" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">Log In to Your Account</a>
+            <a href="${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/login" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">Log In to Your Account</a>
             <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">
               If you have any questions or need assistance, please do not hesitate to contact our support team.
             </p>
-            <p style="margin-top:16px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Hostel Management System Team</p>
+            <p style="margin-top:16px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Unizik Hostel Portal Team</p>
           </div>
         </div>
 
         <!-- Footer Section -->
         <div style="background:#f0f0f0;padding:24px;text-align:center;color:#666;font-size:0.85rem;line-height:1.6;border-top:1px solid #e5e5e5;">
-          <p style="margin:0 0 8px 0;">&copy; 2025 Hostel Management System. All rights reserved.</p>
+          <p style="margin:0 0 8px 0;">&copy; 2025 Unizik Hostel Portal. All rights reserved.</p>
           <p style="margin:0 0 8px 0;">
-              Nigeria
+              Awka, Anambra State, Nigeria
           </p>
           <p style="margin:0 0 16px 0;">
-              Email: <a href="mailto:info@mgv-tech.com" style="color:#00B9F1;text-decoration:none;">info@mgv-tech.com</a> | Phone: <a href="tel:+2348103069432" style="color:#00B9F1;text-decoration:none;">(+234) 08103069432</a>
+              Email: <a href="mailto:info@unizikportal.edu.ng" style="color:#00B9F1;text-decoration:none;">info@unizikportal.edu.ng</a> | Phone: <a href="tel:+2348067355116" style="color:#00B9F1;text-decoration:none;">(+234) 08067355116</a>
           </p>
-          <div style="margin-top:10px;">
-            <a href="https://linkedin.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">LinkedIn</a> |
-            <a href="https://instagram.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Instagram</a> |
-            <a href="https://tiktok.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">TikTok</a> |
-            <a href="https://facebook.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Facebook</a>
-          </div>
         </div>
       </div>
       `
@@ -100,13 +94,13 @@ exports.register = async (req, res) => {
 
           <!-- Header section -->
           <div style="background:#00B9F1;padding:24px 0;text-align:center;">
-              <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Hostel Management System!</h1>
+              <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Unizik Hostel Portal!</h1>
           </div>
 
           <!-- Body Section -->
           <div style="padding:32px 24px 24px 24px;">
             <div style="color:#222;line-height:1.6;">
-              <p style="font-size:1.1rem;margin-bottom:16px;">Hi Hostel Management System Team,</p>
+              <p style="font-size:1.1rem;margin-bottom:16px;">Hi Unizik Hostel Portal Team,</p>
               <h2 style="font-size:1.8rem;color:#00B9F1;margin-bottom:16px;">New User Registration Notification!</h2>
               <p style="font-size:1.1rem;margin-bottom:16px;">
                 A new user has successfully registered on your website. Here are their details:
@@ -115,17 +109,23 @@ exports.register = async (req, res) => {
               <ul style="list-style:none;padding:0;margin:0;">
                 <li style="margin-bottom:8px;"><strong>First Name:</strong> ${newUser.firstName || 'N/A'}</li>
                 <li style="margin-bottom:8px;"><strong>Last Name:</strong> ${newUser.lastName || 'N/A'}</li>
+                <li style="margin-bottom:8px;"><strong>Other Name:</strong> ${newUser.otherName || 'N/A'}</li>
                 <li style="margin-bottom:8px;"><strong>Matric Number:</strong> ${newUser.matricNumber || 'N/A'}</li>
+                <li style="margin-bottom:8px;"><strong>Department:</strong> ${newUser.department || 'N/A'}</li>
+                <li style="margin-bottom:8px;"><strong>Level:</strong> ${newUser.level || 'N/A'}</li>
+                <li style="margin-bottom:8px;"><strong>Gender:</strong> ${newUser.gender || 'N/A'}</li>
+                <li style="margin-bottom:8px;"><strong>Date of Birth:</strong> ${newUser.dateOfBirth || 'N/A'}</li>
                 <li style="margin-bottom:8px;"><strong>Email:</strong> ${newUser.email}</li>
                 <li style="margin-bottom:8px;"><strong>Phone Number:</strong> ${newUser.phone}</li>
                 <li style="margin-bottom:8px;"><strong>Role:</strong> ${newUser.role || 'Student'}</li>
+                <li style="margin-bottom:8px;"><strong>Address:</strong> ${newUser.address || 'N/A'}</li>
                 <li style="margin-bottom:8px;"><strong>Registration Date:</strong> ${new Date(newUser.createdAt).toLocaleString()}</li>
               </ul>
               <p style="margin-top:24px;margin-bottom:24px;">
                 Please log in to the admin dashboard to view the user's full profile or manage user accounts.
               </p>
-              <a href="${process.env.FRONTEND_URL || 'https://mgv-tech.com'}//app/allusers" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">View User in Admin Dashboard</a>
-              <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Hostel Management System</p>
+              <a href="${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/login" style="display:inline-block;margin:18px 0 0 0;padding:12px 28px;background:#00B9F1;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;font-size:1rem;box-shadow:0 4px 8px rgba(0, 185, 241, 0.2);">View User in Admin Dashboard</a>
+              <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Unizik Hostel Portal Team</p>
             </div>
           </div>
 
@@ -133,17 +133,11 @@ exports.register = async (req, res) => {
           <div style="background:#f0f0f0;padding:24px;text-align:center;color:#666;font-size:0.85rem;line-height:1.6;border-top:1px solid #e5e5e5;">
             <p style="margin:0 0 8px 0;">&copy; 2025 Hostel Management System. All rights reserved.</p>
             <p style="margin:0 0 8px 0;">
-              Lagos, Nigeria
+              Awka, Anambra State, Nigeria
             </p>
             <p style="margin:0 0 16px 0;">
-              Email: <a href="mailto:info@mgv-tech.com" style="color:#00B9F1;text-decoration:none;">info@mgv-tech.com</a> | Phone: <a href="tel:+2348103069432" style="color:#00B9F1;text-decoration:none;">(+234) 08103069432</a>
+              Email: <a href="mailto:info@unizikportal.edu.ng" style="color:#00B9F1;text-decoration:none;">info@unizikportal.edu.ng</a> | Phone: <a href="tel:+2348067355116" style="color:#00B9F1;text-decoration:none;">(+234) 08067355116</a>
             </p>
-            <div style="margin-top:10px;">
-              <a href="https://linkedin.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">LinkedIn</a> |
-              <a href="https://instagram.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Instagram</a> |
-              <a href="https://tiktok.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">TikTok</a> |
-              <a href="https://facebook.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Facebook</a>
-            </div>
           </div>
         </div>
         `
@@ -196,17 +190,17 @@ exports.requestPasswordReset = async (req, res) => {
           pass: process.env.EMAIL_PASS
         }
       });
-    const resetUrl = `${process.env.FRONTEND_URL || 'https://mgv-tech.com'}/resetpassword/${token}`;
+    const resetUrl = `${process.env.FRONTEND_URL || 'https://hostel-mgt-system.netlify.app'}/resetpassword/${token}`;
     await transporter.sendMail({
       to: user.email,
-      from: `"Marshall Global Ventures" <${process.env.EMAIL_USER}>`,
+      from: `"Unizik Hostel Portal" <${process.env.EMAIL_USER}>`,
       subject: `Password Reset for ${user.name || user.email}`,
       html: `
       <div style="max-width:580px;margin:auto;border-radius:8px;border:1px solid #e0e0e0;background:#fff;overflow:hidden;font-family:'Inter',sans-serif;">
 
         <!-- Header Section -->
         <div style="background:#00B9F1;padding:24px 0;text-align:center;">
-          <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Marshall Global Ventures</h1>
+          <h1 style="color:#fff;margin:0;font-size:2.2rem;font-weight:700;line-height:1.2;">Unizik Hostel Portal</h1>
         </div>
 
         <!-- Body Section -->
@@ -214,7 +208,7 @@ exports.requestPasswordReset = async (req, res) => {
           <p style="font-size:1.1rem;margin-bottom:16px;">Hi ${user.name || user.email},</p>
           <h2 style="font-size:1.8rem;color:#00B9F1;margin-bottom:16px;">Password Reset Request for Your Account</h2>
           <p style="font-size:1.1rem;margin-bottom:16px;">
-            We received a request to reset the password for your Marshall Global Ventures account.
+            We received a request to reset the password for your Unizik Hostel Portal account.
           </p>
           <p style="color:#222;line-height:1.5;margin-bottom:24px;">
             To reset your password, please click the button below. This link is valid for <strong>1 hour</strong> only.
@@ -224,24 +218,18 @@ exports.requestPasswordReset = async (req, res) => {
             If you did not request a password reset, please ignore this email. Your password will remain unchanged.
             For security reasons, do not share this link with anyone.
           </p>
-          <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>The Marshall Global Ventures Team</p>
+          <p style="margin-top:32px;color:#888;font-size:0.95rem;line-height:1.5;">Best regards,<br/>Unizik Hostel Portal Team</p>
         </div> 
 
         <!-- Footer Section -->
         <div style="background:#f0f0f0;padding:24px;text-align:center;color:#666;font-size:0.85rem;line-height:1.6;border-top:1px solid #e5e5e5;">
-          <p style="margin:0 0 8px 0;">&copy; 2025 Marshall Global Ventures. All rights reserved.</p>
+          <p style="margin:0 0 8px 0;">&copy; 2025 Unizik Hostel Portal. All rights reserved.</p>
           <p style="margin:0 0 8px 0;">
-            123 Ikorodu Road, Lagos, Nigeria
+            Awka, Anambra State, Nigeria
           </p>
           <p style="margin:0 0 16px 0;">
-            Email: <a href="mailto:info@mgv-tech.com" style="color:#00B9F1;text-decoration:none;">info@mgv-tech.com</a> | Phone: <a href="tel:+2348103069432" style="color:#00B9F1;text-decoration:none;">(+234) 08103069432</a>
+            Email: <a href="mailto:info@unizikportal.edu.ng" style="color:#00B9F1;text-decoration:none;">info@unizikportal.edu.ng</a> | Phone: <a href="tel:+2348067355116" style="color:#00B9F1;text-decoration:none;">(+234) 08067355116</a>
           </p>
-          <div style="margin-top:10px;">
-            <a href="https://linkedin.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">LinkedIn</a> |
-            <a href="https://instagram.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Instagram</a> |
-            <a href="https://tiktok.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">TikTok</a> |
-            <a href="https://facebook.com" style="color:#00B9F1;text-decoration:none;margin:0 8px;">Facebook</a>
-          </div>
         </div>
       </div>
       `
