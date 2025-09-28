@@ -121,10 +121,16 @@ exports.editCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
+    console.log('Edit Furniture Category - Incoming ID:', id);
+    console.log('Edit Furniture Category - Incoming name:', name);
     const category = await FurnitureCategory.findByIdAndUpdate(id, { name }, { new: true });
-    if (!category) return res.status(404).json({ error: 'Category not found' });
+    if (!category) {
+      console.log('Edit Furniture Category - Not found for ID:', id);
+      return res.status(404).json({ error: 'Category not found' });
+    }
     res.json(category);
   } catch (err) {
+    console.error('Edit Furniture Category - Error:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -146,7 +152,9 @@ exports.getStudentDamageReports = async (req, res) => {
   try {
     const { studentId } = req.params;
     // Find all furniture where damageReports contains this student
-    const furniture = await Furniture.find({ 'damageReports.student': studentId }).populate('damageReports.student').populate('category');
+    const furniture = await Furniture.find({ 'damageReports.student': studentId })
+      .populate('damageReports.student')
+      .populate('category');
     // Flatten and filter damageReports for this student
     const reports = [];
     furniture.forEach(f => {
@@ -158,7 +166,7 @@ exports.getStudentDamageReports = async (req, res) => {
             description: r.description,
             reportedAt: r.reportedAt,
             status: f.status,
-            category: f.category?.name || '',
+            category: f.category, // Return full category object
             repairStatus: r.repairStatus,
             repairUpdate: r.repairUpdate
           });
