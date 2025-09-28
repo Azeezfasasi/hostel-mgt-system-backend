@@ -27,10 +27,16 @@ exports.editFacilityCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
+    console.log('Edit Facility Category - Incoming ID:', id);
+    console.log('Edit Facility Category - Incoming name:', name);
     const category = await FacilityCategory.findByIdAndUpdate(id, { name }, { new: true });
-    if (!category) return res.status(404).json({ error: 'Category not found' });
+    if (!category) {
+      console.log('Edit Facility Category - Not found for ID:', id);
+      return res.status(404).json({ error: 'Category not found' });
+    }
     res.json(category);
   } catch (err) {
+    console.error('Edit Facility Category - Error:', err);
     res.status(500).json({ error: err.message });
   }
 };
