@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 const facilityController = require('../controllers/facilityController');
 
+// Debug: Get a single facility category by ID
+router.get('/facility-categories/:id', async (req, res) => {
+	const FacilityCategory = require('../models/FacilityCategory');
+	try {
+		const category = await FacilityCategory.findById(req.params.id);
+		if (!category) return res.status(404).json({ error: 'Category not found' });
+		res.json(category);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
 // Facility Category CRUD 
 // Post - /facility/facility-categories
 router.post('/facility-categories', facilityController.createFacilityCategory);
