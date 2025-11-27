@@ -54,6 +54,9 @@ router.post('/facility/:id/report-damage', facilityController.reportDamage);
 // GET - facility/facility/:id/damage-reports
 router.get('/facility/:id/damage-reports', facilityController.getFacilityDamageReports);
 
+// GET - facility/damage-reports/student/:studentId (Get student's damage reports)
+router.get('/damage-reports/student/:studentId', facilityController.getStudentDamageReports);
+
 // PATCH - facility/facility/:facilityId/report/:reportId
 router.patch('/facility/:facilityId/report/:reportId', facilityController.updateFacilityDamageReport);
 

@@ -124,6 +124,39 @@ exports.getFacilityDamageReports = async (req, res) => {
   }
 };
 
+// Fetch damage reports for a specific student
+exports.getStudentDamageReports = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    // Find all facilities where damageReports contains this student
+    const facilities = await Facility.find({ 'damageReports.student': studentId })
+      .populate('damageReports.student')
+      .populate('category');
+    
+    // Flatten and filter damageReports for this student
+    const reports = [];
+    facilities.forEach(f => {
+      f.damageReports.forEach(r => {
+        if (r.student && r.student._id?.toString() === studentId) {
+          reports.push({
+            facilityName: f.name,
+            location: f.location,
+            description: r.description,
+            reportedAt: r.reportedAt,
+            status: f.status,
+            category: f.category, // Return full category object
+            repairStatus: r.repairStatus,
+            repairUpdate: r.repairUpdate
+          });
+        }
+      });
+    });
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // Update a damage report for a facility
 exports.updateFacilityDamageReport = async (req, res) => {
   try {
