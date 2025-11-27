@@ -51,6 +51,9 @@ router.delete('/facility/:id', facilityController.deleteFacility);
 // POST - facility/facility/:id/report-damage
 router.post('/facility/:id/report-damage', facilityController.reportDamage);
 
+// GET - facility/damage-reports (Get all facility damage reports)
+router.get('/damage-reports', facilityController.getAllDamageReports);
+
 // GET - facility/facility/:id/damage-reports
 router.get('/facility/:id/damage-reports', facilityController.getFacilityDamageReports);
 

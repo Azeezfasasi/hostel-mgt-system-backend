@@ -112,6 +112,24 @@ exports.deleteFacility = async (req, res) => {
   }
 };
 
+// Get all damage reports for facilities
+exports.getAllDamageReports = async (req, res) => {
+  try {
+    const damaged = await Facility.find({ 'damageReports.0': { $exists: true } })
+      .populate('damageReports.student')
+      .populate('category');
+    const reports = damaged.map(f => ({
+      facilityId: f._id,
+      facilityName: f.name,
+      location: f.location,
+      reports: f.damageReports
+    }));
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // Get all damage reports for a facility
 exports.getFacilityDamageReports = async (req, res) => {
   try {
